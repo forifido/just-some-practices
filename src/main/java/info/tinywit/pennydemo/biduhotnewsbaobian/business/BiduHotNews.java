@@ -87,11 +87,18 @@ public class BiduHotNews {
     }
 
     private List<News> fetchHotNews() {
-        String page = HttpclientUtil.get(BIDU_NEWS_URL);
+        ArrayList<News> newsList = new ArrayList<>();
+        String page;
+        try {
+            page = HttpclientUtil.get(BIDU_NEWS_URL);
+        } catch (Exception e) {
+            LOG.error("err#fetch bidu news page", e);
+            return newsList;
+        }
+
         JXDocument jxDocument = JXDocument.create(page);
         String xPath = "//div[@id='body']//ul/li//a[@target='_blank']";
         List<Object> list = jxDocument.sel(xPath);
-        ArrayList<News> newsList = new ArrayList<>();
         for (Object e : list) {
             if (e instanceof Element) {
                 String url = ((Element) e).attr("href");
