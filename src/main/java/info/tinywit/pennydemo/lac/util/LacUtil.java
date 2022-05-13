@@ -33,7 +33,7 @@ public class LacUtil {
                 for (int j = s; j < e; j++) {
                     ArrayList<String> words = new ArrayList<>();
                     ArrayList<String> tags = new ArrayList<>();
-                    lac.run(text, words, tags);
+                    lac.run(textLines[j], words, tags);
                     textLines[j] = StringUtils.joinWith("//", words.toArray());
                 }
                 return null;
