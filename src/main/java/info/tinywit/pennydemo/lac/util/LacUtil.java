@@ -17,6 +17,7 @@ public class LacUtil {
     }
 
     public static String run(final String text, int workCnt) {
+        lac = new LAC(System.getProperty("user.dir") + "/models_general/lac_model");
         FutureTask<String>[] tasks = new FutureTask[workCnt];
         final String[] textLines = StringUtils.split(text, "\n");
         if (textLines == null || text.length() == 0) {
