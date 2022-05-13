@@ -20,7 +20,9 @@ public class LacUtil {
 //        LAC lac = new LAC(System.getProperty("user.dir") + "/models_general/lac_model");
         ArrayList<String> w = new ArrayList<>();
         ArrayList<String> t = new ArrayList<>();
-        lac.run("百度是一家科技公司", w, t);
+        synchronized (lac) {
+            lac.run("百度是一家科技公司", w, t);
+        }
         System.out.println(StringUtils.join(w));
         System.out.println(w);
         FutureTask<String>[] tasks = new FutureTask[workCnt];
@@ -39,7 +41,7 @@ public class LacUtil {
                 for (int j = s; j < e; j++) {
                     ArrayList<String> words = new ArrayList<>();
                     ArrayList<String> tags = new ArrayList<>();
-                    lac.run(textLines[j], words, tags);
+//                    lac.run(textLines[j], words, tags);
                     textLines[j] = StringUtils.joinWith("//", words.toArray());
                 }
                 return null;
