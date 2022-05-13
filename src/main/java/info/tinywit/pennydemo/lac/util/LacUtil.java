@@ -18,13 +18,13 @@ public class LacUtil {
 
     public static String run(final String text, int workCnt) {
 //        LAC lac = new LAC(System.getProperty("user.dir") + "/models_general/lac_model");
-        ArrayList<String> w = new ArrayList<>();
-        ArrayList<String> t = new ArrayList<>();
-        synchronized (lac) {
-            lac.run("百度是一家科技公司", w, t);
-        }
-        System.out.println(StringUtils.join(w));
-        System.out.println(w);
+//        ArrayList<String> w = new ArrayList<>();
+//        ArrayList<String> t = new ArrayList<>();
+//        synchronized (lac) {
+//            lac.run("百度是一家科技公司", w, t);
+//        }
+//        System.out.println(StringUtils.join(w));
+//        System.out.println(w);
         FutureTask<String>[] tasks = new FutureTask[workCnt];
         final String[] textLines = StringUtils.split(text, "\n");
         if (textLines == null || text.length() == 0) {
@@ -41,7 +41,9 @@ public class LacUtil {
                 for (int j = s; j < e; j++) {
                     ArrayList<String> words = new ArrayList<>();
                     ArrayList<String> tags = new ArrayList<>();
-//                    lac.run(textLines[j], words, tags);
+                    synchronized (lac) {
+                        lac.run(textLines[j], words, tags);
+                    }
                     textLines[j] = StringUtils.joinWith("//", words.toArray());
                 }
                 return null;
