@@ -7,17 +7,22 @@ import java.util.ArrayList;
 import java.util.concurrent.FutureTask;
 
 public class LacUtil {
-//    public static LAC lac;
+    public static LAC lac;
 
     static {
         System.out.println("please put liblacjni.so in dir: " + System.getProperty("java.library.path"));
         System.loadLibrary("lacjni");
-//        lac = new LAC(System.getProperty("user.dir") + "/models_general/lac_model");
+        lac = new LAC(System.getProperty("user.dir") + "/models_general/lac_model");
         //lac = new LAC("/home/k/Desktop/models_general/lac_model");
     }
 
     public static String run(final String text, int workCnt) {
-        LAC lac = new LAC(System.getProperty("user.dir") + "/models_general/lac_model");
+//        LAC lac = new LAC(System.getProperty("user.dir") + "/models_general/lac_model");
+        ArrayList<String> w = new ArrayList<>();
+        ArrayList<String> t = new ArrayList<>();
+        lac.run("百度是一家科技公司", w, t);
+        System.out.println(StringUtils.join(w));
+        System.out.println(w);
         FutureTask<String>[] tasks = new FutureTask[workCnt];
         final String[] textLines = StringUtils.split(text, "\n");
         if (textLines == null || text.length() == 0) {
