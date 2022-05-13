@@ -18,7 +18,7 @@ public class LacUtil {
 
     public static String run(final String text, int workCnt) {
         FutureTask<String>[] tasks = new FutureTask[workCnt];
-        final String[] textLines = StringUtils.split("\\n", text);
+        final String[] textLines = StringUtils.split(text, "\n");
         if (textLines == null || text.length() == 0) {
             return null;
         }
