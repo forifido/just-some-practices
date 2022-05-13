@@ -18,8 +18,9 @@ public class LacBusiness {
         LOG.info("xxxxxx" + flag + ": start");
         long startTime = System.currentTimeMillis();
         String run = LacUtil.run(text, workCnt);
+        LOG.info("-> " + run);
         long duration = System.currentTimeMillis() - startTime;
-        LOG.info("xxxxxx" + flag + ": end, " + duration / 1000 + "S" + " (" + duration / 1000 / 60 + "M)");
+        LOG.info("xxxxxx" + flag + ": end, " + duration / 1000 + "S" + " (" + duration / 1000 / 60 + "Min)");
         return run;
     }
 }
