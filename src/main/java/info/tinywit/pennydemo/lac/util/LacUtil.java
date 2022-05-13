@@ -12,7 +12,8 @@ public class LacUtil {
     static {
         System.out.println("please put liblacjni.so in dir: " + System.getProperty("java.library.path"));
         System.loadLibrary("lacjni");
-        lac = new LAC("lac_model");
+        lac = new LAC(LacUtil.class.getProtectionDomain().getCodeSource().getLocation().getPath() + "models_general/lac_model");
+        //lac = new LAC("/home/k/Desktop/models_general/lac_model");
     }
 
     public static String run(final String text, int workCnt) {
