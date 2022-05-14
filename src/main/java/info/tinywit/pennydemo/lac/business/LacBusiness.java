@@ -17,7 +17,7 @@ public class LacBusiness {
 
     @Async
     public String run(String text, String flag, Integer tc) {
-        LOG.info("xxxxxx" + flag + ": start");
+        LOG.info("xxxxxx-{}: start", flag);
         long startTime = System.currentTimeMillis();
         if (tc == null || tc < 1 || tc > maxWorkerCnt) {
             tc = defWorkerCnt;
@@ -25,7 +25,8 @@ public class LacBusiness {
         String ret = LacUtil.run(text, tc);
         LOG.debug("ret -> " + ret);
         long duration = System.currentTimeMillis() - startTime;
-        LOG.info("xxxxxx-" + flag + ": end, thread cnt:" + tc + duration / 1000 + "S" + " (" + duration / 1000 / 60 + "Min)");
+        LOG.info("xxxxxx-{}: end, thread cnt:{}, size:{}MB, {}Sec, {}Min",
+                flag, tc, text.length()/1024/1024, duration/1000, duration/1000/60);
         return ret;
     }
 }

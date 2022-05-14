@@ -42,10 +42,10 @@ public class LacUtil {
                     threadLac.run(textLines[j], words, tags);
                     textLines[j] = StringUtils.joinWith("//", words.toArray());
                     if (j % 1000 == 0) {
-                        LOG.info("##lac-thread-" + t + "## " + ((j - s) * 100 / (e - s)) + "%");
+                        LOG.info("lac-thread-{}, has completed: {}%", t,  (j - s) * 100 / (e - s));
                     }
                 }
-                LOG.info("## lac-thread-" + t + " ## " + "100%");
+                LOG.info("lac-thread-{}, has completed: 100%", t);
                 return null;
             });
             tasks[i] = stringFutureTask;
