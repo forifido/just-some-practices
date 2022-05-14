@@ -10,17 +10,22 @@ import org.springframework.stereotype.Component;
 @Component
 public class LacBusiness {
     private final static Logger LOG = LoggerFactory.getLogger(LacBusiness.class);
-    @Value("${app.lac.worker.cnt:1}")
-    private Integer workCnt;
+    @Value("${app.lac.worker.defcnt:2}")
+    private Integer defWorkerCnt;
+    @Value("${app.lac.worker.maxcnt:10}")
+    private Integer maxWorkerCnt;
 
     @Async
-    public String run(String text, String flag) {
+    public String run(String text, String flag, Integer tc) {
         LOG.info("xxxxxx" + flag + ": start");
         long startTime = System.currentTimeMillis();
-        String run = LacUtil.run(text, workCnt);
-        LOG.info("-> " + run);
+        if (tc < 1 || tc > maxWorkerCnt) {
+            tc = defWorkerCnt;
+        }
+        String ret = LacUtil.run(text, tc);
+        LOG.debug("ret -> " + ret);
         long duration = System.currentTimeMillis() - startTime;
-        LOG.info("xxxxxx" + flag + ": end, " + duration / 1000 + "S" + " (" + duration / 1000 / 60 + "Min)");
-        return run;
+        LOG.info("xxxxxx-" + flag + ": end, thread cnt:" + tc + duration / 1000 + "S" + " (" + duration / 1000 / 60 + "Min)");
+        return ret;
     }
 }

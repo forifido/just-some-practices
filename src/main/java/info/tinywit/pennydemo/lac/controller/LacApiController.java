@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.websocket.server.PathParam;
 import java.util.HashMap;
 
 @RestController()
@@ -18,12 +19,12 @@ public class LacApiController {
     LacBusiness lacBusiness;
 
     @RequestMapping(method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-    public String lac(@RequestBody(required = false) String body, @RequestParam(required = false) String flag) {
+    public String lac(@RequestBody(required = false) String body, @RequestParam(required = false) String flag,@RequestParam(required = false) Integer tc) {
         HashMap<String, String> ret = new HashMap<>();
         ret.put("code", "0");
         ret.put("msg", "doing, wait a moment!");
         try {
-            lacBusiness.run(body, flag);
+            lacBusiness.run(body, flag, tc);
             //System.out.println("1");
         } catch (Exception e) {
             ret.put("code", "-1");
