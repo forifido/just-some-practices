@@ -25,7 +25,7 @@ public class LacBusiness {
         LOG.debug("ret -> " + ret);
         long duration = System.currentTimeMillis() - startTime;
         LOG.info("xxxxxx-{}: end, thread cnt:{}, {}Sec",
-                flag, tc, duration / 10000);
+                flag, tc, duration / 1000);
         return ret;
     }
 }
