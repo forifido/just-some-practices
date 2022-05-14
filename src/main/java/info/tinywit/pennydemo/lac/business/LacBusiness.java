@@ -4,7 +4,6 @@ import info.tinywit.pennydemo.lac.util.LacUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -15,7 +14,7 @@ public class LacBusiness {
     @Value("${app.lac.worker.maxcnt:10}")
     private Integer maxWorkerCnt;
 
-    @Async
+    //    @Async
     public String run(String text, String flag, Integer tc) {
         LOG.info("xxxxxx-{}: start", flag);
         long startTime = System.currentTimeMillis();
@@ -25,8 +24,8 @@ public class LacBusiness {
         String ret = LacUtil.run(text, tc);
         LOG.debug("ret -> " + ret);
         long duration = System.currentTimeMillis() - startTime;
-        LOG.info("xxxxxx-{}: end, thread cnt:{}, size:{}MB, {}Sec, {}Min",
-                flag, tc, text.length()/1024/1024, duration/1000, duration/1000/60);
+        LOG.info("xxxxxx-{}: end, thread cnt:{}, {}Sec",
+                flag, tc, duration / 10000);
         return ret;
     }
 }
