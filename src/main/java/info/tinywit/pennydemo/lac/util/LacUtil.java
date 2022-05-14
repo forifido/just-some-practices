@@ -41,8 +41,8 @@ public class LacUtil {
                     ArrayList<String> tags = new ArrayList<>();
                     threadLac.run(textLines[j], words, tags);
                     textLines[j] = StringUtils.joinWith("//", words.toArray());
-                    if (j % 100 == 0) {
-                        LOG.info("## lac-thread-" + t + " ## " + ((j - s) / (e - s)));
+                    if (j % 1000 == 0) {
+                        LOG.info("##lac-thread-" + t + "## " + ((j - s) * 100 / (e - s)) + "%");
                     }
                 }
                 LOG.info("## lac-thread-" + t + " ## " + "100%");
