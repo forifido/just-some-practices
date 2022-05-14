@@ -29,13 +29,12 @@ public class LacUtil {
             final int s = begin;
             final int e = Math.min(begin + step, textLines.length);
             begin = e;
+            LAC threadLac = new LAC(lac);
             FutureTask<String> stringFutureTask = new FutureTask<>(() -> {
                 for (int j = s; j < e; j++) {
                     ArrayList<String> words = new ArrayList<>();
                     ArrayList<String> tags = new ArrayList<>();
-                    synchronized (lac) {
-                        lac.run(textLines[j], words, tags);
-                    }
+                    threadLac.run(textLines[j], words, tags);
                     textLines[j] = StringUtils.joinWith("//", words.toArray());
                 }
                 return null;
