@@ -19,7 +19,7 @@ public class LacBusiness {
     public String run(String text, String flag, Integer tc) {
         LOG.info("xxxxxx" + flag + ": start");
         long startTime = System.currentTimeMillis();
-        if (tc < 1 || tc > maxWorkerCnt) {
+        if (tc == null || tc < 1 || tc > maxWorkerCnt) {
             tc = defWorkerCnt;
         }
         String ret = LacUtil.run(text, tc);
