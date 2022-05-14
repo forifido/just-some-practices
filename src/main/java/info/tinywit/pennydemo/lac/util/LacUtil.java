@@ -1,12 +1,16 @@
 package info.tinywit.pennydemo.lac.util;
 
 import com.baidu.nlp.LAC;
+import info.tinywit.pennydemo.lac.business.LacBusiness;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.concurrent.FutureTask;
 
 public class LacUtil {
+    private final static Logger LOG = LoggerFactory.getLogger(LacBusiness.class);
     public static LAC lac;
 
     static {
@@ -28,6 +32,7 @@ public class LacUtil {
         for (int i = 0; i < tasks.length; i++) {
             final int s = begin;
             final int e = Math.min(begin + step, textLines.length);
+            final int t = i;
             begin = e;
             LAC threadLac = new LAC(lac);
             FutureTask<String> stringFutureTask = new FutureTask<>(() -> {
@@ -36,7 +41,11 @@ public class LacUtil {
                     ArrayList<String> tags = new ArrayList<>();
                     threadLac.run(textLines[j], words, tags);
                     textLines[j] = StringUtils.joinWith("//", words.toArray());
+                    if (j % 100 == 0) {
+                        LOG.info("## lac-thread-" + t + " ## " + ((j - s) / (e - s)));
+                    }
                 }
+                LOG.info("## lac-thread-" + t + " ## " + "100%");
                 return null;
             });
             tasks[i] = stringFutureTask;
